@@ -10,9 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.instituteController = void 0;
+const tryCatchHandler_1 = require("../utils/tryCatchHandler");
+const institute_1 = require("../services/institute");
+const institute_2 = require("../validators/institute");
 const instituteController = {
-    addInstitute: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(req, res);
-    })
+    addInstitute: (0, tryCatchHandler_1.try_catch)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        institute_2.instituteSchema.parse(req.body); // Will throw if invalid
+        let data = yield institute_1.instituteService.addInstitute(req.body);
+        res.send({ success: true, message: "successfully added" });
+        return;
+    })),
+    getInstitutes: (0, tryCatchHandler_1.try_catch)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const institutes = yield institute_1.instituteService.getInstitutes();
+        res.send({ success: true, institutes });
+        return;
+    }))
 };
 exports.instituteController = instituteController;

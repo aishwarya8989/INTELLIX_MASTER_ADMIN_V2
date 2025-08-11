@@ -4,6 +4,7 @@ const app:Application=express()
 
 const instituteRoute:Router=express.Router();
 
-instituteRoute.post("/",instituteController.addInstitute)
+instituteRoute.post("/add",instituteController.addInstitute)
+instituteRoute.get("/fetch",instituteController.getInstitutes)
 
 export {instituteRoute};

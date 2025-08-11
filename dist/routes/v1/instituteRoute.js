@@ -9,4 +9,5 @@ const instituteController_1 = require("../../controllers/instituteController");
 const app = (0, express_1.default)();
 const instituteRoute = express_1.default.Router();
 exports.instituteRoute = instituteRoute;
-instituteRoute.post("/", instituteController_1.instituteController.addInstitute);
+instituteRoute.post("/add", instituteController_1.instituteController.addInstitute);
+instituteRoute.get("/fetch", instituteController_1.instituteController.getInstitutes);

@@ -30,7 +30,7 @@ model MasterAdmin {
   id         Int      @id @default(autoincrement())
   email      String   @unique
   password   String
-  contact_no Int
+  contact_no String  @unique
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   token      String?   // Optional field for auth/session token

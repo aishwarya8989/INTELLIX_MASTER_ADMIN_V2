@@ -10,7 +10,8 @@ export const validateMasterAdminToken = async (
     const authHeader = req.headers["authorization"];
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({ message: "Bearer token required" });
+      res.status(401).json({ message: "Bearer token required" });
+      return
     }
 
     const token = authHeader.split(" ")[1]; // Extract token from "Bearer <token>"
@@ -20,14 +21,16 @@ export const validateMasterAdminToken = async (
     });
 
     if (!masterAdmin) {
-      return res.status(401).json({ message: "Invalid token" });
+      res.status(401).json({ message: "Invalid token" });
+      return
     }
 
     // Attach user to request if needed
-    // req.query.user = masterAdmin;
+    req.user = masterAdmin;
 
     next();
   } catch (error) {
-    return res.status(500).json({ message: "Internal server error", error });
+    res.status(500).json({ message: "Internal server error", error });
+    return
   }
 };
