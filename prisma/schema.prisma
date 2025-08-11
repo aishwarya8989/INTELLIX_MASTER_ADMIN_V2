@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Institute {
+  id         Int      @id @default(autoincrement()) // Primary key
+  name       String
+  code       String   @unique
+  url        String?  @unique
+  machineId  String?  
+  active     Boolean  @default(true)                // ✅ New 'active' column
+  createdAt  DateTime @default(now())               // Timestamp for creation
+  updatedAt  DateTime @updatedAt                    // Auto-updated timestamp
+  admins InstAdmin[]  
+
+}
+
+model MasterAdmin {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  password   String
+  contact_no Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  token      String?   // Optional field for auth/session token
+
+}
+
+model InstAdmin {
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  password    String
+  instituteId Int
+  institute   Institute @relation(fields: [instituteId], references: [id])
+}
+
+
+
+
+
